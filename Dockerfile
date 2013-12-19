@@ -4,23 +4,17 @@
 FROM        ubuntu:12.04
 MAINTAINER  rtw 
 
-# Update packages
+# Step 3/4: Update packages
 RUN echo "deb http://archive.ubuntu.com/ubuntu/ precise universe" >> /etc/apt/sources.list
 RUN apt-get update
 
-# install curl, wget
+# Step 5: install curl, wget
 RUN apt-get install -y curl wget
 
-# Configure repos
-RUN apt-get install -y python-software-properties
-RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-RUN add-apt-repository 'deb http://mirrors.linsrv.net/mariadb/repo/5.5/ubuntu precise main'
-RUN add-apt-repository -y ppa:nginx/stable
-RUN add-apt-repository -y ppa:ondrej/php5
-RUN apt-get update
+# Step 6-11: install stuff
 
 # Install MariaDB
-RUN apt-get -y install mariadb-server
+RUN apt-get -y install mysql-server
 RUN sed -i 's/^innodb_flush_method/#innodb_flush_method/' /etc/mysql/my.cnf
 
 # Install nginx

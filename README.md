@@ -1,4 +1,4 @@
 coreos-docker-lemp
 ==================
 
-lxc + nginx + mariaDB + php-fpm
+lxc + nginx + mysql-server + php-fpm
