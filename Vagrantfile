@@ -10,14 +10,17 @@ Vagrant.configure("2") do |config|
 		vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
 	end
 	# Define a static IP
-    config.vm.network "private_network",
-            ip: "10.10.10.10"
+    config.vm.network "private_network", ip: "10.10.10.10"
 
-    # Share the current folder via NFS
-    config.vm.synced_folder ".", "/home/core/sites",
-            id: "core",
-            :nfs => true,
-            :mount_options => ['nolock,vers=3,udp,noatime']
+	config.vm.network :forwarded_port, guest: 8080, host: 8080
+	config.vm.network :forwarded_port, guest: 8081, host: 8081
+	config.vm.network :forwarded_port, guest: 3306, host: 3307
+
+    #Share the current folder via NFS
+   config.vm.synced_folder ".", "/home/core/sites",
+           id: "core",
+           :nfs => true,
+           :mount_options => ['nolock,vers=3,udp,noatime']
 	
     config.vm.provision "shell",
             path: "./provision-docker-lemp.sh"
